@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/toolforbiz/static/css/main.53b66f45.css",
+    "main.js": "/toolforbiz/static/js/main.1dc3b8db.js",
+    "index.html": "/toolforbiz/index.html",
+    "main.53b66f45.css.map": "/toolforbiz/static/css/main.53b66f45.css.map",
+    "main.1dc3b8db.js.map": "/toolforbiz/static/js/main.1dc3b8db.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.53b66f45.css",
+    "static/js/main.1dc3b8db.js"
+  ]
+}
