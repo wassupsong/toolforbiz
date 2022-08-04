@@ -1,0 +1,165 @@
+html, body, #root{
+	height: 100%;
+	width: 100%;
+}
+
+@keyframes boxFade {
+	0% {
+		opacity: 1;
+	 }
+	 50% {
+		opacity: 0;
+	 }
+	 100% {
+		opacity: 1;
+	 }
+}
+
+@keyframes changeColor {
+	0% {
+		color: red;
+	 }
+	 50% {
+		color: blue;
+	 }
+	 100% {
+		color: red;
+	 }
+}
+
+/* LoginForm */
+.login_container {
+	text-align: center;
+	display: flex;
+  justify-content : center;
+	padding: 10rem;
+	height: 100%;
+	width: 100%;
+	background-color: black;
+	color: white;
+	margin: 0 !important;
+}
+
+.login_title {
+	justify-content : center;
+	margin-bottom: 5rem;
+}
+
+.login_input_form{
+	text-align: center;
+}
+
+.login_social{
+	margin: 1rem;
+}
+
+.login_social_button{
+	margin: 1rem;
+	width: 10rem;
+	background-color: black !important;
+	color: white !important;
+}
+.login_social_button:hover {
+	background-color: white !important;
+	color: black !important;
+}
+
+.login_input{
+	width: 30rem;
+	background-color: black !important;
+	color: white !important;
+}
+
+.login_input:hover{
+	background-color: white !important;
+	color:black !important;
+}
+
+.login_toggle:hover{
+	text-decoration:underline;
+	text-decoration-style: wavy;
+	text-decoration-thickness : 3px;
+}
+
+/* Home */
+
+.home_container{
+	height: 100%;
+	overflow-y: scroll;
+}
+.home_container::-webkit-scrollbar{
+	display:none;
+}
+
+.home_title{
+	height: 100%;
+	text-align: center;
+	align-items: center;
+  justify-content: center;
+}
+
+.home_title > h1{
+	vertical-align: middle;
+	font-size: 7rem;
+	font-weight: bold;
+	padding-top: 15rem;
+	color: black;
+}
+
+.home_title > p {
+	animation: boxFade 2s 1s infinite linear alternate;
+	font-size: 2rem;
+	margin-top: 3rem;
+	margin-bottom: 12rem;
+}
+
+.home_title > span{
+	padding: 1rem;
+	display: flex;
+	float: inherit;
+	flex-direction: column;
+	font-weight: bold;
+	animation: changeColor 1s 1s infinite linear alternate;
+}
+
+.home_mouseicon {
+	animation: changeColor 1s 1s infinite linear alternate;
+}
+
+.home_content {
+	height: 100%;
+}
+
+.home_content_div {
+	height : 100%;
+	display: none;
+}
+
+/* TopNavbar */
+.topNavbar_icon{
+	background-color: transparent;
+}
+
+.topNavbar_head{
+	margin:0;
+}
+
+/* BottomNavbar */
+.BottomNavbar_head {
+	margin : 0;
+	color : white;
+	text-align: center;
+	height: 10%;
+	padding-top : 2rem;
+	display: block;
+}
+
+.BottomNavbar_head > p {
+	margin:0
+}
+
+/* leftSidebar */
+.lefSidebar_container{
+	background-color: white !important;
+	color: black !important;
+}
