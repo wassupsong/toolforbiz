@@ -1,9 +1,10 @@
-import LoginForm from "./LoginForm";
-import Home from "./Home";
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { Spinner } from "react-bootstrap";
+import AppRouter from "./Router";
 
 const App = () => {
+  const [init, setInit] = useState(false);
   const [userData, setUserData] = useState();
   useEffect(() => {
     const auth = getAuth();
@@ -13,9 +14,20 @@ const App = () => {
       } else {
         setUserData(null);
       }
+      setInit(true);
     });
   }, []);
-  return <>{userData ? <Home /> : <LoginForm />}</>;
+  return (
+    <>
+      {init ? (
+        <AppRouter userData={userData} />
+      ) : (
+        <div className="Loading">
+          <Spinner animation="border" variant="secondary" />
+        </div>
+      )}
+    </>
+  );
 };
 
 export default App;
