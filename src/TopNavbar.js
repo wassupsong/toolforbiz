@@ -19,11 +19,15 @@ const TopNavbar = ({ userData }) => {
           <Link to="/toolforbiz/randomFood" className="topNavbar_Link">
             RandomFood
           </Link>
+          <Link to="/toolforbiz/rummiKub" className="topNavbar_Link">
+            Rummikub
+          </Link>
         </Nav>
       </Container>
       <LeftSidebar
         leftSideHide={leftSideHide}
         leftSidebarMode={leftSidebarMode}
+        userData={userData}
       />
     </Navbar>
   );

@@ -9,6 +9,7 @@ import {
 import { firebaseStore } from "./fbase";
 import { ButtonGroup, Button } from "react-bootstrap";
 import RandomFood_List from "./RandomFood_List";
+import BottomNavbar from "./BottomNavbar";
 
 const RandomFood = () => {
   const [foodList, setFoodList] = useState([]);
@@ -19,6 +20,7 @@ const RandomFood = () => {
   const [selected_RF_Container, setSelected_RF_Container] =
     useState("RF_Container");
   const [listShow, setListShow] = useState(false);
+  const [listLength, setListLength] = useState(0);
   //음식 데이터 조회
   useEffect(() => {
     onSnapshot(collection(firebaseStore, "foodList"), (snapshot) => {
@@ -26,6 +28,7 @@ const RandomFood = () => {
         ...doc.data(),
       }));
       setFoodList(list);
+      setListLength(list.length);
     });
   }, []);
   //난수 생성
@@ -56,57 +59,60 @@ const RandomFood = () => {
     await deleteDoc(doc(firebaseStore, "foodList", foodId));
   };
   return (
-    <div className={selected_RF_Container}>
-      <RandomFood_List
-        listShow={listShow}
-        setListShow={setListShow}
-        foodList={foodList}
-        deleteFood={deleteFood}
-        addFood={addFood}
-      />
-      <div className="RF_background">
-        <div className="RF_Head">
-          <h1>오늘 뭐 먹을까?</h1>
-        </div>
-        <hr width="80%" color="black" size="3" />
-        <div className="RF_Main">
-          <ul className={selected_slide_box}>
+    <>
+      <div className={selected_RF_Container}>
+        <RandomFood_List
+          listShow={listShow}
+          setListShow={setListShow}
+          foodList={foodList}
+          deleteFood={deleteFood}
+          addFood={addFood}
+        />
+        <div className="RF_background">
+          <div className="RF_Head">
+            <h1>오늘 뭐 먹을까?</h1>
+          </div>
+          <hr width="80%" color="black" size="3" />
+          <div className="RF_Main">
+            <ul className={selected_slide_box}>
+              {selectedFood ? (
+                <h1>{selectedFood.name}</h1>
+              ) : (
+                foodList.map((el) => <li key={el.name}>{el.name}</li>)
+              )}
+            </ul>
+          </div>
+          <hr width="80%" color="black" size="3" />
+          <div className="RF_Footer">
             {selectedFood ? (
-              <h1>{selectedFood.name}</h1>
+              <>
+                <p>대충가격 : {selectedFood.price} 원</p>
+                <p>메인메뉴 : {selectedFood.mainmenu}</p>
+                <p>대충거리 : {selectedFood.distance}</p>
+              </>
             ) : (
-              foodList.map((el) => <li key={el.name}>{el.name}</li>)
+              <>
+                <p>대충가격 : ????</p>
+                <p>메인메뉴 : ????</p>
+                <p>대충거리 : ????</p>
+              </>
             )}
-          </ul>
+          </div>
+          <ButtonGroup aria-label="Basic example">
+            <Button variant="secondary" onClick={() => setListShow(true)}>
+              list
+            </Button>
+            <Button variant="success" onClick={selectMenu}>
+              select
+            </Button>
+            <Button variant="danger" onClick={resetMenu}>
+              reset
+            </Button>
+          </ButtonGroup>
         </div>
-        <hr width="80%" color="black" size="3" />
-        <div className="RF_Footer">
-          {selectedFood ? (
-            <>
-              <p>대충가격 : {selectedFood.price} 원</p>
-              <p>메인메뉴 : {selectedFood.mainmenu}</p>
-              <p>대충거리 : {selectedFood.distance}</p>
-            </>
-          ) : (
-            <>
-              <p>대충가격 : ????</p>
-              <p>메인메뉴 : ????</p>
-              <p>대충거리 : ????</p>
-            </>
-          )}
-        </div>
-        <ButtonGroup aria-label="Basic example">
-          <Button variant="secondary" onClick={() => setListShow(true)}>
-            list
-          </Button>
-          <Button variant="success" onClick={selectMenu}>
-            select
-          </Button>
-          <Button variant="danger" onClick={resetMenu}>
-            reset
-          </Button>
-        </ButtonGroup>
       </div>
-    </div>
+      <BottomNavbar />
+    </>
   );
 };
 
