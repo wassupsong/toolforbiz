@@ -9,7 +9,7 @@ const TopNavbar = ({ userData }) => {
   const leftSideShow = () => setleftSidebarMode(true);
   const leftSideHide = () => setleftSidebarMode(false);
   return (
-    <Navbar bg="dark" variant="dark" sticky="top">
+    <Navbar bg="dark" variant="dark" className="topNavbar_Main">
       <Button variant="dark" onClick={leftSideShow} size="lg">
         <BsJustify className="topNavbar_icon" size="2rem" />
       </Button>

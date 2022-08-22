@@ -159,7 +159,8 @@ html, body, #root{
 	text-align: center;
 	align-items: center;
   justify-content: center;
-	background-color: #808080;
+	background-image:url("../image/star.gif");
+	background-size: 120%, 10%
 }
 
 .home_content_div {
@@ -170,19 +171,98 @@ html, body, #root{
 }
 .home_content_div > * {
 	opacity: 0;
+	color: white;
+	font-size: 3rem;
 }
 
-.home_content_div > p {
-	padding: 2rem;
-	font-size: 3rem;
-	color: white;
+.home_content_time > p {
+	font-size: 1.5rem;
 }
-.home_image{
-	width: 20rem;
-	height: 20rem;
+
+.home_content_time > h1 {
+	font-size:6rem;
+}
+.home_content_searchBtn{
+	margin-top : 5rem;
+}
+
+.home_content_searchBtn > input {
+	display:none;
+}
+.home_content_searchBtn > label{
+	border-radius: 2rem;
+	margin: 1rem;
+	text-align: center;
+	height: -webkit-fill-available;
+	width: 12rem;
+	font-size: 2rem;
+}
+
+.home_content_searchBtn > input[type=radio]:checked + label{
+	background: #184DA0;
+	color: #fff;
+}
+
+.home_content_searchBtn > input[type=radio] + label {
+	background: #F9FAFC;
+	color: #666;
+}
+
+
+.home_content_search > input{
+	font-size:1.5rem;
+	width: 45rem;
+	height: 4rem;
+	border-radius: 3rem;
+	border : none;
+	padding: 2rem;
+	padding-left : 3.5rem;
+}
+.home_content_search > svg {
+	color: black;
+	position: absolute;
+	margin-left: 1rem;
+	top:22px;
+	width: 1.8rem;
+}
+.home_content_search > input:hover{
+	border:none;
+}
+
+.home_content_search > ul {
+	list-style:none;
+	background-color: white;
+	width: 42rem;
+	font-size:1rem;
+	border : none;
+	color:black;
+	overflow-y: scroll;
+	text-align: left;
+	max-height: 275px;
+	display:none;
+	margin: 0 auto;
+	border-bottom-left-radius: 2rem;
+	border-bottom-right-radius: 2rem;
+	padding: 0;
+}
+
+.home_content_search > ul > li{
+	height: 100%;
+	width: 100%;
+	padding:1.2rem;
+	z-index: 1000;
+}
+
+.home_content_search > ul > li:hover{
+	background-color: #aaa;
 }
 
 /* TopNavbar */
+.topNavbar_Main{
+	width: 100% !important;
+	position: fixed !important;
+	z-index: 10000;
+}
 .topNavbar_icon{
 	background-color: transparent;
 }
@@ -222,6 +302,7 @@ html, body, #root{
 .leftSidebar_container{
 	background-color: white !important;
 	color: black !important;
+	z-index: 999999;
 }
 
 .leftSidebar_footBtn {

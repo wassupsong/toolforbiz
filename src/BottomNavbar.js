@@ -1,5 +1,3 @@
-import { Navbar, Container, Nav } from "react-bootstrap";
-
 const BottomNavbar = () => {
   return (
     <div className="BottomNavbar_head">

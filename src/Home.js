@@ -1,24 +1,39 @@
 import BottomNavbar from "./BottomNavbar";
-import { BsMouse, BsArrowRightCircleFill } from "react-icons/bs";
-import food from "./image/food.gif";
-import sinrimSwim from "./image/sinrimSwim.webp";
-import Image from "react-bootstrap/Image";
-import { useNavigate } from "react-router-dom";
-
+import { BsMouse, BsSearch, BsWindowSidebar } from "react-icons/bs";
+import { MdOutlineWatchLater } from "react-icons/md";
+import { GrFormClose } from "react-icons/gr";
+import { useEffect, useRef, useState } from "react";
+import * as common from "./Common";
 const Home = () => {
-  const navigate = useNavigate();
+  const [searchVal, setSearchVal] = useState("");
+  const [searchCheck, setSearchCheck] = useState(true);
+  const [recordList, setRecordList] = useState("");
+  const clock = () => {
+    const today = new Date();
+    const dateStr = `${today.getFullYear()}년 ${
+      today.getMonth() + 1
+    }월 ${today.getDate()}일 (${common.getDayLabel(today.getDay(), 2)})`;
+    const timeStr = common.formatTime(today);
+    document.getElementById("date").innerText = dateStr;
+    document.getElementById("time").innerText = timeStr;
+  };
+  useEffect(() => {
+    if (localStorage.getItem("searchRecordList")) {
+      setRecordList(localStorage.getItem("searchRecordList"));
+    }
+    setInterval(clock, 1000);
+  }, []);
+  const contentRef = useRef();
   const onScroll = (event) => {
     const {
       target: { scrollTop },
     } = event;
-    if (scrollTop > 200 && scrollTop < 1000) {
-      fadeInDiv(1);
-    } else if (scrollTop > 1000) {
-      fadeInDiv(2);
+    if (scrollTop > 200) {
+      fadeInDiv();
     }
   };
-  const fadeInDiv = (num) => {
-    const contentDiv = document.getElementById(`content_div${num}`).children;
+  const fadeInDiv = () => {
+    const contentDiv = document.getElementById(`content_div`).children;
     let cnt = 0;
     const interval = setInterval(() => {
       contentDiv[cnt].style.transitionProperty = "opacity transform";
@@ -32,15 +47,106 @@ const Home = () => {
       if (cnt === contentDiv.length) clearInterval(interval);
     }, 500);
   };
-  const clickScrollBtn = (event) => {
-    fadeInDiv(1);
-    document
-      .getElementById("content")
-      .scrollIntoView({ behavior: "smooth", block: "start" });
+  const clickScrollBtn = () => {
+    contentRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+      inline: "center",
+    });
   };
-  const moveRandomFood = () => {
-    navigate("/toolforbiz/randomFood");
+  const inputChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setSearchVal(value);
   };
+
+  const searchSite = (event) => {
+    event.preventDefault();
+    if (!searchVal) {
+      alert("검색어를 입력해주세요.");
+      return;
+    }
+    saveSearchRecord();
+    if (searchCheck)
+      window.open(`https://www.google.com/search?q=${encodeURI(searchVal)}`);
+
+    if (!searchCheck)
+      window.open(
+        `https://search.naver.com/search.naver?query=${encodeURI(searchVal)}`
+      );
+    setRecordList(localStorage.getItem("searchRecordList"));
+  };
+
+  const saveSearchRecord = () => {
+    if (!recordList) {
+      localStorage.setItem("searchRecordList", searchVal);
+    } else {
+      let recordArr = recordList.split(",");
+      if (recordArr.includes(searchVal))
+        recordArr.splice(recordArr.indexOf(searchVal), 1);
+
+      if (recordArr.length > 10) {
+        recordArr.shift();
+        recordArr.unshift(searchVal);
+        recordArr.join(",");
+      } else {
+        recordArr.unshift(searchVal);
+        recordArr.join(",");
+      }
+      localStorage.setItem("searchRecordList", recordArr);
+    }
+  };
+
+  const toggleSearch = (event) => {
+    const {
+      target: { id },
+    } = event;
+    if (id === "radio1") setSearchCheck(true);
+    if (id === "radio2") setSearchCheck(false);
+  };
+
+  const clickSearchItem = (item) => {
+    if (searchCheck) {
+      window.open(`https://www.google.com/search?q=${encodeURI(item)}`);
+    } else {
+      window.open(
+        `https://search.naver.com/search.naver?query=${encodeURI(item)}`
+      );
+    }
+  };
+  const searchFocus = (event) => {
+    if (event.type === "focus") {
+      document.getElementById("recordList").style.display = "block";
+      setRecordList(localStorage.getItem("searchRecordList"));
+    }
+    if (event.type === "blur")
+      setTimeout(
+        () => (document.getElementById("recordList").style.display = "none"),
+        200
+      );
+  };
+  const deleteRecordList = (event, item) => {
+    event.stopPropagation();
+    let recordArr = recordList.split(",");
+    recordArr.splice(recordArr.indexOf(item), 1);
+    recordArr.join(",");
+    localStorage.setItem("searchRecordList", recordArr);
+  };
+
+  const deleteRecordEvent = (event) => {
+    const {
+      target: { id },
+    } = event;
+    if (id) {
+      if (event.type === "mouseenter") {
+        document.getElementById(`close${id}`).style.display = "inline-block";
+      } else {
+        document.getElementById(`close${id}`).style.display = "none";
+      }
+    }
+  };
+
   return (
     <div className="home_container" onScroll={onScroll}>
       <div className="home_title">
@@ -54,39 +160,67 @@ const Home = () => {
         />
         <span className="home_title_span">Scroll Down or Click Me</span>
       </div>
-      <div className="home_content" id="content">
-        <div
-          className="home_content_div"
-          id="content_div1"
-          onClick={moveRandomFood}
-        >
-          <p>랜덤 음식 고르기</p>
-          <Image rounded src={food} className="home_image" />
-          <p>
-            Random Food
-            <BsArrowRightCircleFill className="" />
-          </p>
-        </div>
-      </div>
-      <div
-        className="home_content"
-        id="content"
-        style={{ backgroundColor: "white" }}
-      >
-        <div className="home_content_div" id="content_div2">
-          <p style={{ color: "black", padding: "0px" }}>
-            힘들 때 우는 자는 삼류다.
-          </p>
-          <p style={{ color: "black", padding: "0px" }}>
-            힘들 때 참는 자는 이류다.
-          </p>
-          <p style={{ color: "red", padding: "0px" }}>
-            힘들 때 웃는 자가 일류다.
-          </p>
-          <p style={{ color: "grey", padding: "0px" }}>
-            Feat. sinrim-dong Phelps
-          </p>
-          <Image rounded src={sinrimSwim} className="home_image" />
+      <div className="home_content">
+        <div className="home_content_div" id="content_div" ref={contentRef}>
+          <div className="home_content_time">
+            <p id="date"></p>
+            <h1 id="time"></h1>
+          </div>
+          <div className="home_content_searchBtn">
+            <input
+              type="radio"
+              id="radio1"
+              checked={searchCheck}
+              onChange={toggleSearch}
+            />
+            <label htmlFor="radio1">Google</label>
+            <input
+              type="radio"
+              id="radio2"
+              checked={!searchCheck}
+              onChange={toggleSearch}
+            />
+            <label htmlFor="radio2">Naver</label>
+          </div>
+          <form onSubmit={searchSite}>
+            <div className="home_content_search">
+              <BsSearch onClick={searchSite} />
+              <input
+                type="text"
+                onChange={inputChange}
+                value={searchVal}
+                onFocus={searchFocus}
+                onBlur={searchFocus}
+              />
+              {recordList ? (
+                <ul id="recordList">
+                  {recordList.split(",").map((item, i) => (
+                    <li
+                      key={i}
+                      onClick={() => clickSearchItem(item)}
+                      onMouseEnter={deleteRecordEvent}
+                      onMouseLeave={deleteRecordEvent}
+                      id={i}
+                    >
+                      <MdOutlineWatchLater style={{ marginRight: "10px" }} />
+                      {item}
+                      <GrFormClose
+                        style={{
+                          float: "right",
+                          width: "1.5rem",
+                          height: "1.5rem",
+                          display: "none",
+                          zIndex: "9999",
+                        }}
+                        id={`close${i}`}
+                        onClick={(e) => deleteRecordList(e, item)}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </div>
+          </form>
         </div>
       </div>
       <BottomNavbar />
