@@ -6,10 +6,10 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
-import { firebaseStore } from "./fbase";
+import { firebaseStore } from "../fbase";
 import { ButtonGroup, Button } from "react-bootstrap";
-import RandomFood_List from "./RandomFood_List";
-import BottomNavbar from "./BottomNavbar";
+import RandomFood_List from "../Component/RandomFood_List";
+import BottomNavbar from "../Component/BottomNavbar";
 
 const RandomFood = () => {
   const [foodList, setFoodList] = useState([]);
@@ -20,7 +20,6 @@ const RandomFood = () => {
   const [selected_RF_Container, setSelected_RF_Container] =
     useState("RF_Container");
   const [listShow, setListShow] = useState(false);
-  const [listLength, setListLength] = useState(0);
   //음식 데이터 조회
   useEffect(() => {
     onSnapshot(collection(firebaseStore, "foodList"), (snapshot) => {
@@ -28,7 +27,6 @@ const RandomFood = () => {
         ...doc.data(),
       }));
       setFoodList(list);
-      setListLength(list.length);
     });
   }, []);
   //난수 생성

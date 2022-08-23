@@ -1,13 +1,15 @@
-import BottomNavbar from "./BottomNavbar";
-import { BsMouse, BsSearch, BsWindowSidebar } from "react-icons/bs";
+import BottomNavbar from "../Component/BottomNavbar";
+import { BsMouse, BsSearch } from "react-icons/bs";
 import { MdOutlineWatchLater } from "react-icons/md";
 import { GrFormClose } from "react-icons/gr";
 import { useEffect, useRef, useState } from "react";
-import * as common from "./Common";
+import * as common from "../Common";
+
 const Home = () => {
   const [searchVal, setSearchVal] = useState("");
   const [searchCheck, setSearchCheck] = useState(true);
   const [recordList, setRecordList] = useState("");
+  //시계 interval
   const clock = () => {
     const today = new Date();
     const dateStr = `${today.getFullYear()}년 ${
@@ -21,9 +23,11 @@ const Home = () => {
     if (localStorage.getItem("searchRecordList")) {
       setRecordList(localStorage.getItem("searchRecordList"));
     }
+    //시계
     setInterval(clock, 1000);
   }, []);
   const contentRef = useRef();
+  //메인 화면 scroll event
   const onScroll = (event) => {
     const {
       target: { scrollTop },
@@ -32,6 +36,7 @@ const Home = () => {
       fadeInDiv();
     }
   };
+  //메인 컨텐츠 fadeIn 구현
   const fadeInDiv = () => {
     const contentDiv = document.getElementById(`content_div`).children;
     let cnt = 0;
@@ -47,6 +52,7 @@ const Home = () => {
       if (cnt === contentDiv.length) clearInterval(interval);
     }, 500);
   };
+  //스크롤 하지않고, 클릭으로 내릴 시, 슬라이드효과
   const clickScrollBtn = () => {
     contentRef.current.scrollIntoView({
       behavior: "smooth",
@@ -54,13 +60,14 @@ const Home = () => {
       inline: "center",
     });
   };
+  //검색창 inputChange
   const inputChange = (event) => {
     const {
       target: { value },
     } = event;
     setSearchVal(value);
   };
-
+  //검색 버튼 및 enter 시, event
   const searchSite = (event) => {
     event.preventDefault();
     if (!searchVal) {
@@ -77,7 +84,7 @@ const Home = () => {
       );
     setRecordList(localStorage.getItem("searchRecordList"));
   };
-
+  //최근검색기록 저장
   const saveSearchRecord = () => {
     if (!recordList) {
       localStorage.setItem("searchRecordList", searchVal);
@@ -97,7 +104,7 @@ const Home = () => {
       localStorage.setItem("searchRecordList", recordArr);
     }
   };
-
+  //검색포털사이트 토글
   const toggleSearch = (event) => {
     const {
       target: { id },
@@ -105,7 +112,7 @@ const Home = () => {
     if (id === "radio1") setSearchCheck(true);
     if (id === "radio2") setSearchCheck(false);
   };
-
+  //최근검색기록 클릭 시 이벤트
   const clickSearchItem = (item) => {
     if (searchCheck) {
       window.open(`https://www.google.com/search?q=${encodeURI(item)}`);
@@ -115,6 +122,7 @@ const Home = () => {
       );
     }
   };
+  //검색창 포커스 시 이벤트
   const searchFocus = (event) => {
     if (event.type === "focus") {
       document.getElementById("recordList").style.display = "block";
@@ -126,6 +134,7 @@ const Home = () => {
         200
       );
   };
+  //검색기록 삭제 버튼 클릭 시 이벤트
   const deleteRecordList = (event, item) => {
     event.stopPropagation();
     let recordArr = recordList.split(",");
@@ -133,7 +142,7 @@ const Home = () => {
     recordArr.join(",");
     localStorage.setItem("searchRecordList", recordArr);
   };
-
+  //검색기록 삭제 버튼 show and hide
   const deleteRecordEvent = (event) => {
     const {
       target: { id },

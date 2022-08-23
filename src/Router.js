@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import TopNavbar from "./TopNavbar";
-import Home from "./Home";
-import LoginForm from "./LoginForm";
-import RandomFood from "./RandomFood";
-import Rummikub from "./Rummikub";
+import TopNavbar from "./Component/TopNavbar";
+import Home from "./routes/Home";
+import LoginForm from "./routes/LoginForm";
+import RandomFood from "./routes/RandomFood";
+import Rummikub from "./routes/Rummikub";
 
 const AppRouter = ({ userData }) => {
   return (

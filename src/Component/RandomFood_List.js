@@ -10,7 +10,6 @@ const RandomFood_List = ({
   addFood,
 }) => {
   const [addFoodShow, setAddFoodShow] = useState(false);
-
   const deleteData = (event) => {
     const {
       target: { name },

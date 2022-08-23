@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Form, Col, Row, Button } from "react-bootstrap";
 import { FcGoogle } from "react-icons/fc";
 import { AiOutlineFacebook } from "react-icons/ai";
-import { firebaseApp } from "./fbase";
+import { firebaseApp } from "../fbase";
 import {
   getAuth,
   createUserWithEmailAndPassword,
