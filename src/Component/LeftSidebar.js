@@ -30,7 +30,6 @@ const LeftSidebar = ({
   };
 
   useEffect(() => {
-    console.log(userData);
     const str = weatherObj.weather[0].main;
     for (let i in weatherStrSelector) {
       if (str === i) {

@@ -200,6 +200,7 @@ const Home = () => {
                 value={searchVal}
                 onFocus={searchFocus}
                 onBlur={searchFocus}
+                id="searchVal"
               />
               {recordList ? (
                 <ul id="recordList">

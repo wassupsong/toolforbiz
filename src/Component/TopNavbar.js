@@ -11,15 +11,19 @@ const TopNavbar = ({ userData }) => {
   const leftSideHide = () => setleftSidebarMode(false);
   useEffect(() => {
     //위치정보(날씨활용)
-    let defaultPosition = {
-      latitude: 37.33,
-      longitude: 126.59,
+    const defaultPosition = {
+      latitude: 37.5642135,
+      longitude: 127.0016985,
     };
-
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        getWeatherInfo(position.coords);
-      });
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          getWeatherInfo(position.coords);
+        },
+        (error) => {
+          getWeatherInfo(defaultPosition);
+        }
+      );
     } else {
       /* 위치정보 사용 불가능 */
       getWeatherInfo(defaultPosition);
@@ -35,6 +39,7 @@ const TopNavbar = ({ userData }) => {
       console.log(error);
     }
   };
+
   return (
     <Navbar bg="dark" variant="dark" className="topNavbar_Main">
       <Button variant="dark" onClick={leftSideShow} size="lg">
