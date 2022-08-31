@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/toolforbiz/static/css/main.dc51919c.css",
-    "main.js": "/toolforbiz/static/js/main.a4c124db.js",
+    "main.js": "/toolforbiz/static/js/main.0e26ed00.js",
     "static/media/star.gif": "/toolforbiz/static/media/star.ce4a8d8df28b091ba212.gif",
     "static/media/pensu.gif": "/toolforbiz/static/media/pensu.59082b178be96064a91a.gif",
     "static/media/randomImage.jpg": "/toolforbiz/static/media/randomImage.f64dde6976aabd3c8aad.jpg",
     "index.html": "/toolforbiz/index.html",
     "main.dc51919c.css.map": "/toolforbiz/static/css/main.dc51919c.css.map",
-    "main.a4c124db.js.map": "/toolforbiz/static/js/main.a4c124db.js.map"
+    "main.0e26ed00.js.map": "/toolforbiz/static/js/main.0e26ed00.js.map"
   },
   "entrypoints": [
     "static/css/main.dc51919c.css",
-    "static/js/main.a4c124db.js"
+    "static/js/main.0e26ed00.js"
   ]
 }
