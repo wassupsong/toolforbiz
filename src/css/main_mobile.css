@@ -1,0 +1,62 @@
+@media (max-width: 767px) {
+  .login_input {
+    width: 20rem;
+  }
+  .login_social_button {
+    margin: 0.5rem;
+    width: 8rem;
+  }
+
+  .home_title > h1 {
+    font-size: 3rem;
+  }
+  .home_title > p {
+    font-size: 1rem;
+    margin-bottom: 4rem;
+  }
+
+  .topNavbar_Container {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem 2rem;
+  }
+  .topNavbar_menu {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+  .topNavbar_menu li {
+    width: 100%;
+    text-align: center;
+  }
+  .topNavbar_menu li:nth-child(2) {
+    display: none;
+  }
+  .topNavbar_foot {
+    display: none;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .topNavbar_menu_mobile {
+    display: block;
+  }
+
+  .topNavbar_menu.on,
+  .topNavbar_foot.on {
+    display: flex;
+  }
+  .menu_dimm.on {
+    display: block;
+  }
+
+  .RF_Table * {
+    font-size: 0.1rem !important;
+  }
+
+  .RF_Table td:nth-child(7),
+  .RF_Table th:nth-child(7) {
+    display: none;
+  }
+}

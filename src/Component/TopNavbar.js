@@ -1,70 +1,78 @@
 import { useEffect, useState } from "react";
-import { Navbar, Container, Nav, Button, Dropdown } from "react-bootstrap";
-import LeftSidebar from "./LeftSidebar";
 import { BsJustify } from "react-icons/bs";
+import { BiLogIn } from "react-icons/bi";
+import { getAuth, signOut } from "firebase/auth";
 import { Link } from "react-router-dom";
 
 const TopNavbar = ({ userData }) => {
-  const [leftSidebarMode, setleftSidebarMode] = useState(false);
-  const [weatherObj, setWeatherObj] = useState(null);
-  const leftSideShow = () => setleftSidebarMode(true);
-  const leftSideHide = () => setleftSidebarMode(false);
-  useEffect(() => {
-    //위치정보(날씨활용)
-    const defaultPosition = {
-      latitude: 37.5642135,
-      longitude: 127.0016985,
-    };
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          getWeatherInfo(position.coords);
-        },
-        (error) => {
-          getWeatherInfo(defaultPosition);
-        }
-      );
-    } else {
-      /* 위치정보 사용 불가능 */
-      getWeatherInfo(defaultPosition);
-    }
-  }, []);
-  const getWeatherInfo = async (position) => {
-    try {
-      const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${position.latitude}&lon=${position.longitude}&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
-      ).then((res) => res.json());
-      setWeatherObj(response);
-    } catch (error) {
-      console.log(error);
-    }
+  const clickMenuToggle = () => {
+    const menu = document.querySelector(".topNavbar_menu");
+    const foot = document.querySelector(".topNavbar_foot");
+    const dimm = document.querySelector(".menu_dimm");
+    menu.classList.toggle("on");
+    foot.classList.toggle("on");
+    dimm.classList.toggle("on");
+  };
+
+  //로그아웃
+  const logOut = () => {
+    const auth = getAuth();
+    signOut(auth);
   };
 
   return (
-    <Navbar bg="dark" variant="dark" className="topNavbar_Main">
-      <Button variant="dark" onClick={leftSideShow} size="lg">
-        <BsJustify className="topNavbar_icon" size="2rem" />
-      </Button>
-      <Container className="topNavbar_head">
-        <Navbar.Brand href="/toolforbiz">toolforbiz</Navbar.Brand>
-        <Nav className="me-auto">
-          <Link to="/toolforbiz/randomFood" className="topNavbar_Link">
-            RandomFood
-          </Link>
-          <Link to="/toolforbiz/rummiKub" className="topNavbar_Link">
-            Rummikub
-          </Link>
-        </Nav>
-      </Container>
-      {weatherObj ? (
-        <LeftSidebar
-          leftSideHide={leftSideHide}
-          leftSidebarMode={leftSidebarMode}
-          userData={userData}
-          weatherObj={weatherObj}
-        />
-      ) : null}
-    </Navbar>
+    <>
+      <div className="menu_dimm" onClick={clickMenuToggle}></div>
+      <nav className="topNavbar_Container">
+        <div className="topNavbar_head">
+          <a href="/toolforbiz">toolforbiz</a>
+        </div>
+        <ul className="topNavbar_menu">
+          <li>
+            <Link
+              to="/toolforbiz/randomFood"
+              className="topNavbar_Link"
+              onClick={clickMenuToggle}
+            >
+              랜덤점심메뉴
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/toolforbiz/rummiKub"
+              className="topNavbar_Link"
+              onClick={clickMenuToggle}
+            >
+              루미큐브
+            </Link>
+          </li>
+          {/* <li>
+            <Link
+              to="/toolforbiz/weather"
+              className="topNavbar_Link"
+              onClick={clickMenuToggle}
+            >
+              날씨정보
+            </Link>
+          </li> */}
+        </ul>
+        <ul className="topNavbar_foot">
+          <li>
+            <button type="button" className="logout" onClick={logOut}>
+              로그아웃
+              <BiLogIn />
+            </button>
+          </li>
+        </ul>
+        <button
+          type="button"
+          className="topNavbar_menu_mobile"
+          onClick={clickMenuToggle}
+        >
+          <BsJustify className="topNavbar_icon" size="2rem" />
+        </button>
+      </nav>
+    </>
   );
 };
 
